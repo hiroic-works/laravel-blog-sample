@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Models\Models;
+namespace App\Models;
 
-// use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Blog extends Model
 {
-    // use HasFactory;
+    use HasFactory;
 
     // テーブル名
     protected $table = 'blogs';
@@ -18,5 +18,5 @@ class Blog extends Model
     [
         'title',
         'content'
-    ]
+    ];
 }
