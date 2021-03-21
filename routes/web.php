@@ -19,6 +19,8 @@ use App\Http\Controllers\BlogController;
 // ブログ一覧
 Route::get('/', [BlogController::class, 'showList'])->name('blogs');
 
+Route::get('/blog/{id}', [BlogController::class, 'showDetail'])->name('show');
+
 // Route::get('/', function() {
 //     return 'hellow';
 // })->name('blogs');
