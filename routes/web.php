@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\BlogController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,6 +14,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// ※Laravel8のルーティング設定　https://qiita.com/tamakiiii/items/e71040173fa0a1fcad83
+
+// ブログ一覧
+Route::get('/', [BlogController::class, 'showList'])->name('blogs');
+
+// Route::get('/', function() {
+//     return 'hellow';
+// })->name('blogs');
