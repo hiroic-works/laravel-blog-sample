@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Blog;
+use App\Http\Requests\BlogRequest;
 
 class BlogController extends Controller
 {
@@ -36,5 +37,41 @@ class BlogController extends Controller
         }
 
         return view('blog.detail',['blog' => $blog]);
+    }
+    /**
+     * ブログ登録画面を表示する
+     *
+     * @return view
+     */
+    public function showCreate()
+    {
+        return view('blog.form');
+    }
+    /**
+     * ブログを登録する
+     *
+     * @return view
+     */
+    public function exeStore(BlogRequest $request)
+    {
+        // $request->all()でフォームで受け取った内容を全部取得
+        $inputs = $request->all();
+        // dd($inputs);
+
+        // トランザクション開始
+        \DB::beginTransaction();
+        try {
+            // 成功したらブログ登録をする
+            Blog::create($inputs);
+            \DB::commit();
+        } catch (\Throwable $e) {
+            // 失敗したら登録されずに例外を投げる
+            \DB::rollback();
+            abort(500); // 500エラーを返す
+            // その他$eを用いてログに残すなど必要な処理をする
+        }
+
+        \Session::flash('err_msg', 'ブログを登録しました。');
+        return redirect(route('blogs'));
     }
 }

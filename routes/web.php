@@ -16,9 +16,16 @@ use App\Http\Controllers\BlogController;
 
 // ※Laravel8のルーティング設定　https://qiita.com/tamakiiii/items/e71040173fa0a1fcad83
 
-// ブログ一覧
+// ブログ一覧画面
 Route::get('/', [BlogController::class, 'showList'])->name('blogs');
 
+// ブログ登録画面
+Route::get('/blog/create', [BlogController::class, 'showCreate'])->name('create');
+
+// ブログ登録
+Route::post('/blog/store', [BlogController::class, 'exeStore'])->name('store');
+
+// ブログ詳細画面
 Route::get('/blog/{id}', [BlogController::class, 'showDetail'])->name('show');
 
 // Route::get('/', function() {
