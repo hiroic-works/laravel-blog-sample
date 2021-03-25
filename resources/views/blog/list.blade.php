@@ -16,12 +16,14 @@
                 <th>記事番号</th>
                 <th>タイトル</th>
                 <th>日付</th>
+                <th>編集</th>
             </tr>
             @foreach($blogs as $blog)
             <tr>
                 <td>{{$blog->id}}</td>
                 <td><a href="/blog/{{$blog->id}}">{{$blog->title}}</a></td>
                 <td>{{$blog->updated_at}}</td>
+                <td><button class="btn btn-primary" type="button" onclick="location.href='/blog/edit/{{$blog->id}}'">編集</button></td>
             </tr>
             @endforeach
         </table>

@@ -74,4 +74,58 @@ class BlogController extends Controller
         \Session::flash('err_msg', 'ブログを登録しました。');
         return redirect(route('blogs'));
     }
+    /**
+     * ブログ編集フォームを表示する
+     *
+     * @param int $id
+     * @return view
+     */
+    public function showEdit($id)
+    {
+        $blog = Blog::find($id);
+        // dd($blog);
+
+        // データがなければ
+        if(is_null($blog)) {
+            \Session::flash('err_msg', 'データがありません。');
+            return redirect(route('blogs'));
+        }
+
+        return view('blog.edit',['blog' => $blog]);
+    }
+    /**
+     * ブログを更新する
+     *
+     * @return view
+     */
+    public function exeUpdate(BlogRequest $request)
+    {
+        // $request->all()でフォームで受け取った内容を全部取得
+        $inputs = $request->all();
+        // dd($inputs);
+
+        // トランザクション開始
+        \DB::beginTransaction();
+        try {
+            // 成功したらブログを更新する
+            // 該当の投稿を取得
+            $blog = Blog::find($inputs['id']);
+            // 該当の投稿に更新用の内容を設定
+            $blog->fill([
+                'title' => $inputs['title'],
+                'content' => $inputs['content'],
+            ]);
+            // 更新する
+            $blog->save();
+            \DB::commit();
+        } catch (\Throwable $e) {
+            // 失敗したら登録されずに例外を投げる
+            \DB::rollback();
+            abort(500); // 500エラーを返す
+            // その他$eを用いてログに残すなど必要な処理をする
+        }
+
+        \Session::flash('err_msg', 'ブログを更新しました。');
+        return redirect(route('blogs'));
+    }
 }
