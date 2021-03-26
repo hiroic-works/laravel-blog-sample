@@ -34,6 +34,8 @@ Route::get('/blog/edit/{id}', [BlogController::class, 'showEdit'])->name('edit')
 // ブログ編集
 Route::post('/blog/update', [BlogController::class, 'exeUpdate'])->name('update');
 
+// ブログ削除
+Route::post('/blog/delete/{id}', [BlogController::class, 'exeDelete'])->name('delete');
 
 // Route::get('/', function() {
 //     return 'hellow';
